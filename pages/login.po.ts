@@ -1,4 +1,4 @@
-import {expect, Page} from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 
 export class LoginPage {
     constructor(private readonly page: Page) {}
@@ -35,6 +35,14 @@ export class LoginPage {
 
     async verifyErrorMessageIsDisplayed() {
         await expect(this.errorMessage).toHaveText('Epic sadface: Username and password do not match any user in this service');
+    }
+
+    async verifyIfOnPage() {
+        await Promise.all([
+            await expect.soft(this.userNameInput).toBeVisible(),
+            await expect.soft(this.passwordInput).toBeVisible(),
+            await expect.soft(this.loginButton).toBeVisible(),
+        ]);
     }
 
 }

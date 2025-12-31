@@ -1,4 +1,4 @@
-import {expect, Page} from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import {BasePage} from "./base.po";
 
 export class CartPage extends BasePage {
@@ -8,7 +8,20 @@ export class CartPage extends BasePage {
         this.url = '/cart.html';
     }
 
-    async navigateTo() {
-        await this.page.goto('/cart.html');
+    private get cartItems() { return this.page.locator('data-test=inventory-item'); }
+
+    async verifyCartIsEmpty() {}
+
+    async verifyCartContains(itemName: string) {
+        await expect(this.cartItems.filter({hasText: itemName})).toHaveCount(1);
+    }
+
+    async removeItemFromCart(itemName: string) {
+        const item = this.cartItems.filter({hasText: itemName});
+        await item.first().getByRole('button').click();
+    }
+
+    async verifyCartCount(count: number) {
+        await expect(this.cartItems).toHaveCount(count);
     }
 }
