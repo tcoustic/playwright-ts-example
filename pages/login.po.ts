@@ -1,4 +1,5 @@
 import { expect, Page } from '@playwright/test';
+import {CORRECT_USER, INCORRECT_USER, User} from "../models/user";
 
 export class LoginPage {
     constructor(private readonly page: Page) {}
@@ -8,29 +9,26 @@ export class LoginPage {
     private get loginButton() { return this.page.locator('#login-button'); }
     private get errorMessage() { return this.page.locator('data-test=error'); }
 
-    private correctCredentials = { username: 'standard_user', password: 'secret_sauce' };
-    private incorrectCredentials = { username: 'standard_user', password: 'regular_sauce' };
-
-
-
     async navigateTo() {
         await this.page.goto('/');
     }
 
-    private async login(username: string, password: string) {
-        await this.userNameInput.fill(username);
-        await this.passwordInput.fill(password);
+    private async login(user: User) {
+        await this.userNameInput.fill(user.username);
+        await this.passwordInput.fill(user.password);
         await this.loginButton.click();
     }
 
     async loginWithCorrectCredentials() {
-        await this.navigateTo();
-        await this.login(this.correctCredentials.username, this.correctCredentials.password);
+        await this.login(CORRECT_USER);
     }
 
     async loginWithIncorrectCredentials() {
-        await this.navigateTo();
-        await this.login(this.incorrectCredentials.username, this.incorrectCredentials.password);
+        await this.login(INCORRECT_USER);
+    }
+
+    async loginWithRegisteredUser(user: User){
+        await this.login(user);
     }
 
     async verifyErrorMessageIsDisplayed() {

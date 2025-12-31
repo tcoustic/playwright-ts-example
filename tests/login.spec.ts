@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import {LoginPage} from "../pages/login.po";
+import { LoginPage } from "../pages/login.po";
 import MainPage from "../pages/main.po";
 
 test.describe('Login page', () => {
