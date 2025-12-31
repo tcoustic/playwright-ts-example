@@ -44,5 +44,6 @@ You can run your tests using the following commands:
 ## Project Structure
 
 - `tests/`: Contains the test files.
-- `pages/`: Page Object Models (POM) for better maintainability.
+- `pages/`: Page Object Models (POM).
+- `models/`: Data models.
 - `playwright.config.ts`: Configuration for Playwright.
